@@ -31,11 +31,15 @@ function runMiddleware(req, res, fn) {
 }
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>) {
-  await runMiddleware(req, res, cors)
-  const result = await prisma.token.findUnique({
-    where: {
-      id: parseInt('1'),
-    }
-  });  
-  return res.status(200).json({ result: result.content});
+  await runMiddleware(req, res, cors);
+  
+  if(req.query.id !== 'undefined'){
+    const result = await prisma.token.findMany({
+      where: {
+        userId: req.query.id,
+      }
+    });
+    
+    return res.status(200).json({ result: result[0]?.content});
+  }
 }
