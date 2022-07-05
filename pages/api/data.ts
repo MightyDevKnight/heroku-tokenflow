@@ -33,10 +33,11 @@ function runMiddleware(req, res, fn) {
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>) {
   await runMiddleware(req, res, cors);
   
+  const userID = req.query.id as string;
   if(req.query.id !== 'undefined'){
     const result = await prisma.token.findMany({
       where: {
-        userId: req.query.id,
+        userId: userID,
       }
     });
     
