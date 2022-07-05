@@ -1,6 +1,10 @@
 {
   "name": "tokenflow",
   "private": true,
+  "engines": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
