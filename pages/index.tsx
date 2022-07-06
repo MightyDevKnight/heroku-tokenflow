@@ -5,6 +5,7 @@ import store from "../store";
 import Home from "../components/Home";
 import useSWR from "swr";
 import { convertToTokenArray } from "../utils/convertTokens";
+const path = require('path');
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -15,21 +16,22 @@ async function fetcherFunc(...args) {
 }
 
 function App() {
-  let tokens, converted;  
-  const router = useRouter();
-  const { data, error } = useSWR(['api/data', router.query.id], fetcherFunc);
+  let converted;  
+  const router = useRouter().query;
+  const [fileName, setFileName] = useState(router.id);
+
+  const { data } = useSWR(['api/data', fileName], fetcherFunc);
   
   if(typeof data === 'object'){
-    const res = JSON.parse(data.result);
-    tokens = JSON.parse(res);
+    const tokens = JSON.parse(data.result);
     converted = convertToTokenArray( {tokens} );
   }
   useEffect(() => {
-    if(!router.isReady) return;
-  }, [router.isReady]);
+    setFileName(router.id);
+  }, [router]);
   return (
     <>
-    {typeof data !== 'undefined' &&
+    {typeof data === 'object' &&
       <Provider store={store}>
         <Home tokenArray={converted}/>
       </Provider>

@@ -33,12 +33,14 @@ function runMiddleware(req, res, fn) {
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>) {
   await runMiddleware(req, res, cors)
 
-  const userId = uuidv4();
-  const result = await prisma.token.create({
-    data:{
-      userId: userId,
-      content: req.body.data
-    }
-  });
-  return res.status(200).json({result: result.userId});  
+  // const userId = uuidv4();
+  // const result = await prisma.token.create({
+  //   data:{
+  //     userId: userId,
+  //     content: req.body.data
+  //   }
+  // });
+  const result = await tokenData.create(req.body.data);
+  
+  return res.status(200).json({result: result});  
 }
