@@ -5,9 +5,6 @@ import store from "../store";
 import Home from "../components/Home";
 import useSWR from "swr";
 import { convertToTokenArray } from "../utils/convertTokens";
-const path = require('path');
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
 async function fetcherFunc(...args) {
   const [url, queryData] = args;

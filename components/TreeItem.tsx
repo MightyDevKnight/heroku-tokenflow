@@ -16,7 +16,7 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   boxShadow: `0 2px 10px ${blackA.blackA7}`,
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
   '&:focus': { boxShadow: `0 0 0 2px black` },
-  '&[data-state="checked"]': { backgroundColor: 'black' },
+  '&[data-state="unchecked"]': { backgroundColor: 'black' },
 });
 
 const StyledThumb = styled(SwitchPrimitive.Thumb, {
@@ -29,7 +29,7 @@ const StyledThumb = styled(SwitchPrimitive.Thumb, {
   transition: 'transform 100ms',
   transform: 'translateX(2px)',
   willChange: 'transform',
-  '&[data-state="unchecked"]': { transform: 'translateX(19px)' },
+  '&[data-state="checked"]': { transform: 'translateX(19px)' },
 });
 
 // Exports
@@ -56,7 +56,7 @@ const TreeItem: React.FC<Props> = ({
   tokenType
 }) => {
   const dispatch = useDispatch();
-  const [isChecked, setIsChecked] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(true);
   const tokenTypeChecked = useSelector((state: RootState) => (state.tokenType));
   const handleSwithcClicked = React.useCallback(() => {
     dispatch(updateTokenTypeStatus({name: tokenType}));

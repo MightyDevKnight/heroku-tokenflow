@@ -1,6 +1,5 @@
 import React, { useState, useEffect, MouseEvent, useCallback } from "react";
 import { Provider, useSelector } from 'react-redux';
-import { useRouter } from 'next/router'
 
 import ReactFlow, {
   isEdge,
