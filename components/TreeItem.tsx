@@ -8,28 +8,31 @@ import { updateTokenTypeStatus } from '../store/tokeTypeStatus';
 
 const StyledSwitch = styled(SwitchPrimitive.Root, {
   all: 'unset',
-  width: 42,
-  height: 25,
+  width: 26,
+  height: 12,
   backgroundColor: blackA.blackA9,
   borderRadius: '9999px',
   position: 'relative',
   boxShadow: `0 2px 10px ${blackA.blackA7}`,
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
-  '&:focus': { boxShadow: `0 0 0 2px black` },
-  '&[data-state="unchecked"]': { backgroundColor: 'black' },
+  marginRight: 5,
+  '&[data-state="checked"]': { backgroundColor: 'black' },
+  '&[data-state="unchecked"]': { backgroundColor: 'white' },
 });
 
 const StyledThumb = styled(SwitchPrimitive.Thumb, {
   display: 'block',
-  width: 21,
-  height: 21,
+  width: 12,
+  height: 12,
   backgroundColor: 'white',
   borderRadius: '9999px',
+  borderColor: 'Black',
+  borderWidth: 'initial',
   boxShadow: `0 2px 2px ${blackA.blackA7}`,
   transition: 'transform 100ms',
-  transform: 'translateX(2px)',
-  willChange: 'transform',
-  '&[data-state="checked"]': { transform: 'translateX(19px)' },
+  transform: 'translateX(0px)',
+  willChange: 'transform',  
+  '&[data-state="checked"]': { transform: 'translateX(14px)' },
 });
 
 // Exports
@@ -37,13 +40,13 @@ export const Switch = StyledSwitch;
 export const SwitchThumb = StyledThumb;
 
 // Your app...
-const Flex = styled('div', { 
-  display: 'flex',
-  justifyContent: 'space-between'
-});
+const Flex = styled('div', { display: 'flex', order:0, flexGrow: 0, marginTop: 15 });
 const Label = styled('label', {
+  fontFamily: 'sans-serif',
+  fontWeight: 500,
+  width: '86px',
   color: 'black',
-  fontSize: 15,
+  fontSize: 18,
   lineHeight: 1,
   userSelect: 'none',
 });
@@ -72,13 +75,13 @@ const TreeItem: React.FC<Props> = ({
   }, [isChecked]);
   return (
     <form>
-      <Flex>
-        <Label htmlFor="s1" css={{ paddingRight: 15 }}>
-          {tokenType}
-        </Label>
+      <Flex css={{ alignItems: 'center' }}>
         <Switch checked={isChecked} id="s1" onCheckedChange={handleSwithcClicked} >
           <SwitchThumb />
         </Switch>
+        <Label htmlFor="s1" css={{ paddingRight: 15 }}>
+          {tokenType}
+        </Label>
       </Flex>
     </form>
   );
