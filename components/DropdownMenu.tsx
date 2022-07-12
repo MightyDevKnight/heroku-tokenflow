@@ -46,16 +46,10 @@ const StyledDropdownMenuTrigger = styled(DropdownMenuPrimitive.Trigger, {
   padding: '$3',
   gap: '$1',
   borderRadius: '$button',
-  backgroundColor: '$bgDefault',
+  backgroundColor: '$bgBlack',
   color: '$text',
-  fontSize: '$xsmall',
-
-  '&:focus, &:hover': {
-    outline: 'none',
-    boxShadow: 'none',
-    backgroundColor: '$bgSubtle',
-    borderColor: '$border',
-  },
+  fontSize: '$small',
+  width: '100%',
 
   variants: {
     bordered: {
