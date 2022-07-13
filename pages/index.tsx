@@ -24,8 +24,7 @@ function App() {
   if(typeof data === 'object'){
     const tokens = JSON.parse(data.result.token);
     theme = data.result.themeData;
-    console.log('themeData', theme);
-
+    
     converted = convertToTokenArray( {tokens} );
   }
   useEffect(() => {

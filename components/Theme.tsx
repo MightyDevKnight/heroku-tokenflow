@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { TokenTypes } from "../constants/TokenTypes";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./DropdownMenu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuItemIndicator, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./DropdownMenu";
 import { Flex } from "./Flex";
 import Text  from './Text';
 import TreeItem from "./TreeItem";
@@ -8,7 +8,7 @@ import { styled } from "../stitches.config";
 import IconToggleableDisclosure from "./IconToggleableDisclosure";
 import Box from "./Box";
 import Heading from "./Heading";
-import TokenSetList from './TokenSetList';
+import { CheckIcon } from "@radix-ui/react-icons";
 
 const ThemeDropdownLabel = styled(Text, {
   marginRight: '$2',
@@ -25,7 +25,44 @@ export default function Theme({
   availableThemes,
   usedTokenSet,
 }: ThemeData){
-  console.log(activeTheme, availableThemes, usedTokenSet);
+  
+  const themes = availableThemes.split('---').map(theme => {
+    return JSON.parse(theme);
+  });
+  const activeThemeLabel = useMemo(() => {
+    if (activeTheme) {
+      const themeOption = themes.find(({ value }) => value  === activeTheme);
+      return themeOption ? themeOption.label : 'Unknown';
+    }
+    return 'None';
+  }, [activeTheme, themes]);
+
+  // const handleSelectTheme = useCallback((themeId: string) => {
+  //   dispatch.tokenState.setActiveTheme((activeTheme === themeId) ? null : themeId);
+  // }, [dispatch, activeTheme]);
+
+  const availableThemeOptions = useMemo(() => (
+    themes.map(({ label, value }) => {
+      // const handleSelect = () => handleSelectTheme(value);
+
+      return (
+        <DropdownMenuRadioItem
+          key={value}
+          value={value}
+          data-cy={`themeselector--themeoptions--${value}`}
+          // @README we can disable this because we are using Memo for the whole list anyways
+          // eslint-disable-next-line react/jsx-no-bind
+          // onSelect={handleSelect}
+        >
+          <DropdownMenuItemIndicator>
+            <CheckIcon />
+          </DropdownMenuItemIndicator>
+          {label}
+        </DropdownMenuRadioItem>
+      );
+    })
+  ), [themes]);
+
   return (
     <Box css={{ justifyContent: 'space-between', alignItems: 'center', width: '200px' }}>
       <Heading muted size="small">Theme</Heading>
@@ -33,16 +70,19 @@ export default function Theme({
         <DropdownMenu>
           <DropdownMenuTrigger data-cy="themeselector-dropdown">
             <Flex>
-              <ThemeDropdownLabel size="small">Light</ThemeDropdownLabel>
+              <ThemeDropdownLabel size="small">{activeThemeLabel}</ThemeDropdownLabel>
               <IconToggleableDisclosure />
             </Flex>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="bottom" css={{ minWidth: '180px' }}>
-            <DropdownMenuRadioGroup >
-              <DropdownMenuRadioItem value="" disabled={false}>
+          <DropdownMenuRadioGroup value={activeTheme ?? ''}>
+            {themes.length === 0 && (
+              <DropdownMenuRadioItem value="" disabled={!activeTheme}>
                 <Text>No themes</Text>
               </DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
+            )}
+            {availableThemeOptions}
+          </DropdownMenuRadioGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               css={{

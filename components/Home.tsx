@@ -61,7 +61,7 @@ export default function Home({
   availableThemes,
   usedTokenSet,
 }: TokenFlowData) {
-  console.log('tokenArray', tokenArray);
+
   const tokenTypeChecked = useSelector((state: RootState) => (state.tokenType));
   let newFilter = [];
   Object.entries(tokenTypeChecked).forEach((tokenStatus) => {

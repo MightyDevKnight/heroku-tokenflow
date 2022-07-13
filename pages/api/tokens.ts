@@ -34,14 +34,17 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   await runMiddleware(req, res, cors)  
 
   const userId = await tokenData.create(req.body.tokenData);
-  const result = await prisma.token.create({
+  let stringData: string = '';
+  req.body.availableThemes.map(theme => stringData += JSON.stringify(theme) + '---');
+  
+  await prisma.token.create({
     data:{
       userId: userId,
       activeTheme: req.body.activeTheme,
-      availableThemes: req.body.availableThemes.toString(),
+      availableThemes:stringData.slice(0, -3),
       usedTokenSet: JSON.stringify(req.body.usedTokenSet),
     }
   });
-
+  
   return res.status(200).json({result: userId});  
 }

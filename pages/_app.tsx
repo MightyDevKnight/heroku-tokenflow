@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import '../styles/toggle-switch.css';
 import '../styles/figma.css';
-import '../styles/main.css';
+
 import type { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
