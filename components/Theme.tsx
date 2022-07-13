@@ -50,7 +50,6 @@ export default function Theme(){
           <TreeItem tokenType={_tokenType} key={_tokenType}/>
         ))}
       </div>
-      <TokenSetList />
     </Box>
   )
 }

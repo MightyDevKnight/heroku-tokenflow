@@ -12,6 +12,8 @@ datasource db {
 
 model Token {
   id        Int     @default(autoincrement()) @id
-  userId    String
-  content   String
+  userId  String  @unique
+  activeTheme    String
+  availableThemes   String
+  usedTokenSet  String
 }
