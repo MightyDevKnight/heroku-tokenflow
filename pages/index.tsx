@@ -20,7 +20,9 @@ function App() {
   const { data } = useSWR(['api/data', fileName], fetcherFunc);
   
   if(typeof data === 'object'){
-    const tokens = JSON.parse(data.result);
+    const tokens = JSON.parse(data.result.token);
+    const themeData = data.result.themeData;
+    console.log('themeData', themeData);
     converted = convertToTokenArray( {tokens} );
   }
   useEffect(() => {

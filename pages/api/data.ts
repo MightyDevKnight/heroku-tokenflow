@@ -9,7 +9,7 @@ const path = require('path');
 const fs = require('fs');
 
 type Data = {
-  result: string
+  result: Object,
 }
 
 const prisma = new PrismaClient();
@@ -37,13 +37,13 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   
   const fileName = req.query.id as string;
   if(req.query.id !== 'undefined'){
-    // const result = await prisma.token.findMany({
-    //   where: {
-    //     userId: userID,
-    //   }
-    // });
-    // return res.status(200).json({ result: result[0]?.content});
+    const themeData = await prisma.token.findMany({
+      where: {
+        userId: req.query.id,
+      }
+    });
+    
     const token = await tokenData.read(fileName);
-    return res.status(200).json({ result: token});
+    return res.status(200).json({ result: {token, themeData}});  
   }
 }
