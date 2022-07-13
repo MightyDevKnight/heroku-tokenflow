@@ -37,7 +37,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   
   const fileName = req.query.id as string;
   if(req.query.id !== 'undefined'){
-    const themeData = await prisma.token.findMany({
+    const themeData = await prisma.token.findFirst({
       where: {
         userId: req.query.id,
       }

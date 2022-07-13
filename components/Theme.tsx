@@ -14,7 +14,18 @@ const ThemeDropdownLabel = styled(Text, {
   marginRight: '$2',
 });
 
-export default function Theme(){
+export type ThemeData = {
+  activeTheme: string,
+  availableThemes: string,
+  usedTokenSet: string,
+}
+
+export default function Theme({
+  activeTheme,
+  availableThemes,
+  usedTokenSet,
+}: ThemeData){
+  console.log(activeTheme, availableThemes, usedTokenSet);
   return (
     <Box css={{ justifyContent: 'space-between', alignItems: 'center', width: '200px' }}>
       <Heading muted size="small">Theme</Heading>

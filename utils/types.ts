@@ -135,3 +135,11 @@ export type PullStyleTypes = {
     colorStyles?: boolean;
     effectStyles?: boolean;
 };
+
+export type ThemeDataTypes = {
+    id: number;
+    userId: string;
+    activeTheme: string;
+    availableThemes: string;
+    usedTokenSet: string;
+}

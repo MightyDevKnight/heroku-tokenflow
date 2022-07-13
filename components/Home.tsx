@@ -29,6 +29,7 @@ import GroupNode from "./GroupNode";
 import { getFlowData } from "./initialElements";
 import Theme from "./Theme";
 import store, { RootState } from "../store";
+import { ThemeDataTypes } from '../utils/types';
 
 const onLoad = (reactFlowInstance: OnLoadParams) =>
   console.log("flow loaded:", reactFlowInstance);
@@ -47,7 +48,20 @@ const nodeTypes = {
   group: GroupNode,
 };
 
-export default function Home(tokenArray) {
+export type TokenFlowData = {
+  tokenArray: any;
+  activeTheme: string;
+  availableThemes: string;
+  usedTokenSet: string;
+}
+
+export default function Home({
+  tokenArray,
+  activeTheme,
+  availableThemes,
+  usedTokenSet,
+}: TokenFlowData) {
+  console.log('tokenArray', tokenArray);
   const tokenTypeChecked = useSelector((state: RootState) => (state.tokenType));
   let newFilter = [];
   Object.entries(tokenTypeChecked).forEach((tokenStatus) => {
@@ -55,7 +69,7 @@ export default function Home(tokenArray) {
       newFilter.push(tokenStatus[0]);
   });
 
-  const newTokenArray = tokenArray.tokenArray.filter(token => !newFilter.includes(token.type));
+  const newTokenArray = tokenArray.filter(token => !newFilter.includes(token.type));
 
   const [initialNodes, initialEdges] = getFlowData(newTokenArray);
 
@@ -119,11 +133,16 @@ export default function Home(tokenArray) {
   useEffect(() => {
     setNodes(initialNodes);
   }, [tokenArray, tokenTypeChecked]);
+  
   return (
     <>
     <Provider store={store}>
     <div style={{ display: 'flex'}}>
-        <Theme />
+      <Theme 
+        activeTheme={activeTheme}
+        availableThemes={availableThemes}
+        usedTokenSet={usedTokenSet}
+      />
       <div style={{ height: '100vh' }} className="layoutflow">
         <ReactFlowProvider>
           <ReactFlow

@@ -5,6 +5,7 @@ import store from "../store";
 import Home from "../components/Home";
 import useSWR from "swr";
 import { convertToTokenArray } from "../utils/convertTokens";
+import { ThemeDataTypes } from '../utils/types';
 
 async function fetcherFunc(...args) {
   const [url, queryData] = args;
@@ -13,7 +14,8 @@ async function fetcherFunc(...args) {
 }
 
 function App() {
-  let converted;  
+  let converted;
+  let theme: ThemeDataTypes;
   const router = useRouter().query;
   const [fileName, setFileName] = useState(router.id);
 
@@ -21,8 +23,9 @@ function App() {
   
   if(typeof data === 'object'){
     const tokens = JSON.parse(data.result.token);
-    const themeData = data.result.themeData;
-    console.log('themeData', themeData);
+    theme = data.result.themeData;
+    console.log('themeData', theme);
+
     converted = convertToTokenArray( {tokens} );
   }
   useEffect(() => {
@@ -32,7 +35,12 @@ function App() {
     <>
     {typeof data === 'object' &&
       <Provider store={store}>
-        <Home tokenArray={converted}/>
+        <Home 
+          tokenArray={converted}
+          activeTheme={theme.activeTheme}
+          availableThemes={theme.availableThemes}
+          usedTokenSet={theme.usedTokenSet}
+        />
       </Provider>
     }
     </>
