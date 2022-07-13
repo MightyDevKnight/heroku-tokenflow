@@ -8,6 +8,7 @@ import { styled } from "../stitches.config";
 import IconToggleableDisclosure from "./IconToggleableDisclosure";
 import Box from "./Box";
 import Heading from "./Heading";
+import TokenSetList from './TokenSetList';
 
 const ThemeDropdownLabel = styled(Text, {
   marginRight: '$2',
@@ -49,6 +50,7 @@ export default function Theme(){
           <TreeItem tokenType={_tokenType} key={_tokenType}/>
         ))}
       </div>
+      <TokenSetList />
     </Box>
   )
 }
