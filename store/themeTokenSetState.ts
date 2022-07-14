@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ThemeTokenSetState {
   activeTheme: string,
-  availableThemes: Object[],
-  usedTokenSet: Object,
+  availableThemes: object[],
+  usedTokenSet: object,
 }
 
 const initialState: ThemeTokenSetState = {
@@ -21,10 +21,10 @@ const themeTokenSetState = createSlice({
 		updateActiveTheme(state, action: PayloadAction<{activeTheme: string}>) {
 			state.activeTheme = action.payload.activeTheme;
 		},
-    updateAvailableThemes(state, action: PayloadAction<{availableThemes: Object[]}>) {
+    updateAvailableThemes(state, action: PayloadAction<{availableThemes: object[]}>) {
 			state.availableThemes = action.payload.availableThemes;
 		},
-    updateUsedTokenSet(state, action: PayloadAction<{usedTokenSet: string}>) {
+    updateUsedTokenSet(state, action: PayloadAction<{usedTokenSet: object}>) {
 			state.usedTokenSet = action.payload.usedTokenSet;
 		},
 	},
