@@ -29,6 +29,7 @@ export default function Theme({
   const themes = availableThemes.split('---').map(theme => {
     return JSON.parse(theme);
   });
+  console.log(activeTheme, availableThemes, usedTokenSet);
   const activeThemeLabel = useMemo(() => {
     if (activeTheme) {
       const themeOption = themes.find(({ value }) => value  === activeTheme);

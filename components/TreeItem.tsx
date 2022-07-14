@@ -4,7 +4,7 @@ import { styled } from '@stitches/react';
 import { violet, mauve, blackA, whiteA } from '@radix-ui/colors';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { RootState } from "../store";
-import { updateTokenTypeStatus } from '../store/tokeTypeStatus';
+import { updateTokenTypeStatus } from '../store/tokenTypeStatusState';
 
 const StyledSwitch = styled(SwitchPrimitive.Root, {
   all: 'unset',
