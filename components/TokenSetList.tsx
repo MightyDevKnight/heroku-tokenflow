@@ -5,7 +5,7 @@ import {
   Reorder, useDragControls, useMotionValue,
 } from 'framer-motion';
 import Box from './Box';
-import { Dispatch } from '../store';
+import { Dispatch, RootState } from '../store';
 import { TokenSetItem } from './TokenSetItem';
 import { TokenSetStatus } from '../constants/TokenSetStatus';
 import { TokenSetListOrTree } from './TokenSetListOrTree';
@@ -27,37 +27,32 @@ function TokenSetListItem({ item, children }: Parameters<TreeRenderFunction>[0])
   const y = useMotionValue(0);
   const boxShadow = useRaisedShadow(y);
   const controls = useDragControls();
-  const editProhibited = useSelector(editProhibitedSelector);
+
   const contextValue = React.useMemo(() => ({ controls }), [controls]);
 
   return (
-      <DragControlsContext.Provider value={contextValue}>
-        <Reorder.Item
-          dragListener={false}
-          dragControls={controls}
-          value={item}
-          style={{ boxShadow, y }}
-        >
-          {children}
-        </Reorder.Item>
-      </DragControlsContext.Provider>
-    )
+    <Reorder.Item
+      dragListener={false}
+      dragControls={controls}
+      value={item}
+      style={{ boxShadow, y }}
+    >
+      {children}
+    </Reorder.Item>
+  )
 }
 
 export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>[0]) {
-  const { confirm } = useConfirm();
-  const dragContext = React.useContext(DragControlsContext);
-  const activeTokenSet = useSelector(activeTokenSetSelector);
-  const usedTokenSet = useSelector(usedTokenSetSelector);
-  const editProhibited = useSelector(editProhibitedSelector);
-  const hasUnsavedChanges = useSelector(hasUnsavedChangesSelector);
+
+  const activeTheme = useSelector((state: RootState) => (state.themeTokenSet)).activeTheme;
+  const availableThemes = useSelector((state: RootState) => (state.themeTokenSet)).availableThemes;
+  const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
   const dispatch = useDispatch();
 
   const handleClick = useCallback(async (set: TreeItem) => {
     if (set.isLeaf) {
           dispatch.tokenState.setActiveTokenSet(set.path);
-          item.saveScrollPositionSet(activeTokenSet);
-        }
+      }
   }, [dispatch, item, activeTokenSet]);
 
   const handleCheckedChange = useCallback((checked: boolean, item: TreeItem) => {
