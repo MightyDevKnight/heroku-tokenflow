@@ -5,6 +5,7 @@ interface ThemeTokenSetState {
   availableThemes: object[],
   usedTokenSet: object,
 	activeTokenSet: string,
+	collapsedTokenSets: string[],
 }
 
 const initialState: ThemeTokenSetState = {
@@ -13,7 +14,8 @@ const initialState: ThemeTokenSetState = {
 	usedTokenSet: {
 		global: 'disabled',
 	},
-	activeTokenSet: ""
+	activeTokenSet: "",
+	collapsedTokenSets: []
 }
 
 const themeTokenSetState = createSlice({
@@ -31,6 +33,9 @@ const themeTokenSetState = createSlice({
 		},
 		updateActiveTokenSet(state, action: PayloadAction<{activeTokenSet: string}>){
 			state.activeTokenSet = action.payload.activeTokenSet;
+		},
+		updateCollapsedTokenSets(state, action: PayloadAction<{collapsedTokenSet: string[]}>){
+			state.collapsedTokenSets = action.payload.collapsedTokenSet;
 		}
 	},
 })
@@ -40,5 +45,6 @@ export const {
   updateAvailableThemes,
   updateUsedTokenSet,
 	updateActiveTokenSet,
+	updateCollapsedTokenSets,
 } = themeTokenSetState.actions;
 export default themeTokenSetState;

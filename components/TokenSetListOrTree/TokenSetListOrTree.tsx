@@ -1,13 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import IconChevronDown from '@/icons/chevrondown.svg';
+import IconChevronDown from './icons/chevrondown.svg';
 import { StyledFolderButton } from './StyledFolderButton';
 import { StyledItem } from './StyledItem';
 import { StyledFolderButtonChevronBox } from './StyledFolderButtonChevronBox';
-import { Dispatch } from '../../store';
-import {
-  collapsedTokenSetsSelector,
-} from '@/selectors';
+import { RootState } from '../../store';
+import { updateCollapsedTokenSets } from '../../store/themeTokenSetState';
 
 type TreeOrListItem<ItemType = unknown> = {
   key: string
@@ -31,12 +29,12 @@ export function TokenSetListOrTree<T extends TreeOrListItem>({
   renderItem: RenderItem = ({ children }) => React.createElement(React.Fragment, {}, children),
   renderItemContent: RenderItemContent,
 }: Props<T>) {
-  const collapsed = useSelector(collapsedTokenSetsSelector);
-  const dispatch = useDispatch<Dispatch>();
+  const collapsed = useSelector((state: RootState) => (state.themeTokenSet)).collapsedTokenSets;
+  const dispatch = useDispatch();
 
   const handleToggleCollapsed = useCallback((key: string) => {
-    dispatch.tokenState.setCollapsedTokenSets(collapsed.includes(key) ? collapsed.filter((s) => s !== key) : [...collapsed, key]);
-  }, [collapsed]);
+    dispatch(updateCollapsedTokenSets({collapsedTokenSet: collapsed.includes(key) ? collapsed.filter((s) => s !== key) : [...collapsed, key]}))
+  }, [collapsed, dispatch]);
 
   const mappedItems = useMemo(() => (
     items.filter((item) => (
