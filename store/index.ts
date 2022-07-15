@@ -4,7 +4,7 @@ import themeTokenSetState from "./themeTokenSetState";
 
 const combinedReducer = combineReducers({
   tokenType: tokenTypeStatus.reducer,
-  themeTokeSet: themeTokenSetState.reducer,
+  themeTokenSet: themeTokenSetState.reducer,
 });
 
 export type RootState = ReturnType<typeof combinedReducer>;

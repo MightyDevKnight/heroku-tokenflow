@@ -22,9 +22,9 @@ const ThemeDropdownLabel = styled(Text, {
 export default function Theme(){
   const dispatch = useDispatch();
 
-  const activeTheme = useSelector((state: RootState) => (state.themeTokeSet)).activeTheme;
-  const availableThemes = useSelector((state: RootState) => (state.themeTokeSet)).availableThemes;
-  const usedTokenSet = useSelector((state: RootState) => (state.themeTokeSet)).usedTokenSet;
+  const activeTheme = useSelector((state: RootState) => (state.themeTokenSet)).activeTheme;
+  const availableThemes = useSelector((state: RootState) => (state.themeTokenSet)).availableThemes;
+  const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
   console.log('activeTheme', activeTheme);
   
   const activeThemeLabel = useMemo(() => {
