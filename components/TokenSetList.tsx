@@ -7,18 +7,10 @@ import {
 import Box from './Box';
 import { Dispatch } from '../store';
 import { TokenSetItem } from './TokenSetItem';
-import useConfirm from '../hooks/useConfirm';
-import {
-  activeTokenSetSelector,
-  editProhibitedSelector,
-  hasUnsavedChangesSelector,
-  usedTokenSetSelector,
-} from '@/selectors';
 import { TokenSetStatus } from '../constants/TokenSetStatus';
 import { TokenSetListOrTree } from './TokenSetListOrTree';
 import { useRaisedShadow } from './use-raised-shadow';
-import { DragControlsContext } from '@/context';
-import { tokenSetListToList, TreeItem } from '@/utils/tokenset';
+import { tokenSetListToList, TreeItem } from '../utils/tokenset';
 import { updateActiveTheme, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
 
 type ExtendedTreeItem = TreeItem & {
