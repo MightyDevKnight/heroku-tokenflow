@@ -37,7 +37,7 @@ export type HomeProps = {
   tokenArray: any;
   activeTheme: string;
   availableThemes: string;
-  usedTokenSet: string;
+  usedTokenSet: object;
 }
 
 export default function Home({
