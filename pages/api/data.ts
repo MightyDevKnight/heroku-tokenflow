@@ -39,7 +39,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   if(req.query.id !== 'undefined'){
     const themeData = await prisma.token.findFirst({
       where: {
-        userId: req.query.id,
+        userId: req.query.id[0],
       }
     });
     
