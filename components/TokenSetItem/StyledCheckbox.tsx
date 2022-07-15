@@ -1,5 +1,5 @@
 import Box from '../Box';
-import { styled } from '@/stitches.config';
+import { styled } from '../../stitches.config';
 
 export const StyledCheckbox = styled(Box, {
   position: 'absolute',
