@@ -43,7 +43,6 @@ export default function Theme(){
 
   const availableThemeOptions = useMemo(() => (
     availableThemes.map(({ label, value }) => {
-      console.log('value', value);
       const handleSelect = () => handleSelectTheme(value);
 
       return (
@@ -62,7 +61,7 @@ export default function Theme(){
         </DropdownMenuRadioItem>
       );
     })
-  ), [availableThemes]);
+  ), [availableThemes, handleSelectTheme]);
 
   return (
     <Box css={{ justifyContent: 'space-between', alignItems: 'center', width: '200px' }}>
