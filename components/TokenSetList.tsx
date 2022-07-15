@@ -14,29 +14,21 @@ import {
   hasUnsavedChangesSelector,
   usedTokenSetSelector,
 } from '@/selectors';
-import { TokenSetStatus } from '@/constants/TokenSetStatus';
+import { TokenSetStatus } from '../constants/TokenSetStatus';
 import { TokenSetListOrTree } from './TokenSetListOrTree';
 import { useRaisedShadow } from './use-raised-shadow';
 import { DragControlsContext } from '@/context';
 import { tokenSetListToList, TreeItem } from '@/utils/tokenset';
+import { updateActiveTheme, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
 
 type ExtendedTreeItem = TreeItem & {
   tokenSets: string[];
-  onRename: (tokenSet: string) => void;
-  onDelete: (tokenSet: string) => void;
-  onDuplicate: (tokenSet: string) => void;
-  saveScrollPositionSet: (tokenSet: string) => void;
 };
 type TreeRenderFunction = (props: React.PropsWithChildren<{
   item: ExtendedTreeItem
 }>) => React.ReactNode;
 type Props = {
   tokenSets: string[];
-  onRename: (tokenSet: string) => void;
-  onDelete: (tokenSet: string) => void;
-  onReorder: (sets: string[]) => void;
-  onDuplicate: (tokenSet: string) => void;
-  saveScrollPositionSet: (tokenSet: string) => void;
 };
 
 function TokenSetListItem({ item, children }: Parameters<TreeRenderFunction>[0]) {
@@ -46,8 +38,7 @@ function TokenSetListItem({ item, children }: Parameters<TreeRenderFunction>[0])
   const editProhibited = useSelector(editProhibitedSelector);
   const contextValue = React.useMemo(() => ({ controls }), [controls]);
 
-  return (!editProhibited)
-    ? (
+  return (
       <DragControlsContext.Provider value={contextValue}>
         <Reorder.Item
           dragListener={false}
@@ -59,7 +50,6 @@ function TokenSetListItem({ item, children }: Parameters<TreeRenderFunction>[0])
         </Reorder.Item>
       </DragControlsContext.Provider>
     )
-    : React.createElement(React.Fragment, {}, children);
 }
 
 export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>[0]) {
@@ -69,22 +59,14 @@ export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>
   const usedTokenSet = useSelector(usedTokenSetSelector);
   const editProhibited = useSelector(editProhibitedSelector);
   const hasUnsavedChanges = useSelector(hasUnsavedChangesSelector);
-  const dispatch = useDispatch<Dispatch>();
+  const dispatch = useDispatch();
 
   const handleClick = useCallback(async (set: TreeItem) => {
     if (set.isLeaf) {
-      if (hasUnsavedChanges) {
-        const userChoice = await confirm({ text: 'You have unsaved changes.', description: 'Your changes will be discarded.' });
-        if (userChoice) {
           dispatch.tokenState.setActiveTokenSet(set.path);
           item.saveScrollPositionSet(activeTokenSet);
         }
-      } else {
-        dispatch.tokenState.setActiveTokenSet(set.path);
-        item.saveScrollPositionSet(activeTokenSet);
-      }
-    }
-  }, [confirm, dispatch, hasUnsavedChanges, item, activeTokenSet]);
+  }, [dispatch, item, activeTokenSet]);
 
   const handleCheckedChange = useCallback((checked: boolean, item: TreeItem) => {
     dispatch.tokenState.toggleUsedTokenSet(item.path);
