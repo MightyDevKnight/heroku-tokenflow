@@ -64,7 +64,6 @@ export default function Home({
         tokenArray={tokenArray}
       />
     </div>
-    <TokenSetList tokenSets={tokenArray} />
     </>
   );
 }

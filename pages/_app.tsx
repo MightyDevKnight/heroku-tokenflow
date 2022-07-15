@@ -1,6 +1,8 @@
 import '../styles/globals.css'
-import '../styles/toggle-switch.css';
 import '../styles/figma.css';
+import '../styles/figma-bridge.css';
+import '../styles/main.css';
+import '../styles/tailwind.css';
 
 import type { AppProps } from 'next/app'
 

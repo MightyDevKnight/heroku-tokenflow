@@ -38,7 +38,7 @@ function App() {
           tokenArray={converted}
           activeTheme={theme.activeTheme}
           availableThemes={theme.availableThemes}
-          usedTokenSet={theme.usedTokenSet}
+          usedTokenSet={JSON.parse(theme.usedTokenSet)}
         />
       </Provider>
     }

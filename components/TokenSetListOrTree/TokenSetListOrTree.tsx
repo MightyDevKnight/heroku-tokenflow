@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import IconChevronDown from './icons/chevrondown.svg';
+import { IconChevronDown } from '../icons';
 import { StyledFolderButton } from './StyledFolderButton';
 import { StyledItem } from './StyledItem';
 import { StyledFolderButtonChevronBox } from './StyledFolderButtonChevronBox';
@@ -49,7 +49,7 @@ export function TokenSetListOrTree<T extends TreeOrListItem>({
 
   return (
     <>
-      {mappedItems.map(({ item, onToggleCollapsed }) => (
+      {mappedItems.map(({ item, onToggleCollapsed }) => (        
         <RenderItem key={item.key} item={item}>
           <StyledItem>
             <RenderItemContent item={item}>

@@ -21,6 +21,7 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@rematch/core": "^2.2.0",
     "@stitches/react": "^1.2.8",
+    "@svgr/webpack": "^6.2.1",
     "color2k": "^2.0.0",
     "compress-json": "^2.0.1",
     "core-js-pure": "^3.23.3",

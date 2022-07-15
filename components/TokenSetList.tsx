@@ -42,8 +42,6 @@ function TokenSetListItem({ item, children }: Parameters<TreeRenderFunction>[0])
 
 export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>[0]) {
 
-  const activeTheme = useSelector((state: RootState) => (state.themeTokenSet)).activeTheme;
-  const availableThemes = useSelector((state: RootState) => (state.themeTokenSet)).availableThemes;
   const activeTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).activeTokenSet;
   const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
   const dispatch = useDispatch();
@@ -68,7 +66,6 @@ export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>
       )}
       item={item}
       onCheck={handleCheckedChange}
-
     />
   );
 }
@@ -102,7 +99,7 @@ export default function TokenSetList({
     <Box>
       <Reorder.Group axis="y" layoutScroll values={mappedItems} onReorder={handleReorder}>
         <TokenSetListOrTree<ExtendedTreeItem>
-          displayType="list"
+          displayType="tree"
           items={mappedItems}
           renderItem={TokenSetListItem}
           renderItemContent={TokenSetListItemContent}

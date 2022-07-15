@@ -14,6 +14,7 @@ import { updateActiveTheme, updateAvailableThemes, updateUsedTokenSet } from "..
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import TokenSetList from "./TokenSetList";
 
 const ThemeDropdownLabel = styled(Text, {
   marginRight: '$2',
@@ -91,6 +92,8 @@ export default function Theme(){
           <TreeItem tokenType={_tokenType} key={_tokenType}/>
         ))}
       </div>
+      <div>TokenSets</div>
+      <TokenSetList tokenSets={Object.keys(usedTokenSet)} />
     </Box>
   )
 }
