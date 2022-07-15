@@ -32,6 +32,7 @@ import store, { RootState } from "../store";
 import { ThemeDataTypes } from '../utils/types';
 import NodeFlower from "./NodeFlower";
 import { updateActiveTheme, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
+import TokenSetList from "./TokenSetList";
 
 export type HomeProps = {
   tokenArray: any;
@@ -63,6 +64,7 @@ export default function Home({
         tokenArray={tokenArray}
       />
     </div>
+    <TokenSetList tokenSets={tokenArray} />
     </>
   );
 }

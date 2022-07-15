@@ -5,13 +5,13 @@ import {
   Reorder, useDragControls, useMotionValue,
 } from 'framer-motion';
 import Box from './Box';
-import { Dispatch, RootState } from '../store';
+import { RootState } from '../store';
 import { TokenSetItem } from './TokenSetItem';
 import { TokenSetStatus } from '../constants/TokenSetStatus';
 import { TokenSetListOrTree } from './TokenSetListOrTree';
 import { useRaisedShadow } from './use-raised-shadow';
 import { tokenSetListToList, TreeItem } from '../utils/tokenset';
-import { updateActiveTheme, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
+import { updateActiveTheme, updateActiveTokenSet, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
 
 type ExtendedTreeItem = TreeItem & {
   tokenSets: string[];
@@ -27,8 +27,6 @@ function TokenSetListItem({ item, children }: Parameters<TreeRenderFunction>[0])
   const y = useMotionValue(0);
   const boxShadow = useRaisedShadow(y);
   const controls = useDragControls();
-
-  const contextValue = React.useMemo(() => ({ controls }), [controls]);
 
   return (
     <Reorder.Item
@@ -46,26 +44,19 @@ export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>
 
   const activeTheme = useSelector((state: RootState) => (state.themeTokenSet)).activeTheme;
   const availableThemes = useSelector((state: RootState) => (state.themeTokenSet)).availableThemes;
+  const activeTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).activeTokenSet;
   const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
   const dispatch = useDispatch();
 
   const handleClick = useCallback(async (set: TreeItem) => {
     if (set.isLeaf) {
-          dispatch.tokenState.setActiveTokenSet(set.path);
+        dispatch(updateActiveTokenSet({activeTokenSet: set.path}));
       }
-  }, [dispatch, item, activeTokenSet]);
+  }, [dispatch]);
 
   const handleCheckedChange = useCallback((checked: boolean, item: TreeItem) => {
-    dispatch.tokenState.toggleUsedTokenSet(item.path);
+    // dispatch.tokenState.toggleUsedTokenSet(item.path);
   }, [dispatch]);
-
-  const handleTreatAsSource = useCallback((tokenSetPath: string) => {
-    dispatch.tokenState.toggleTreatAsSource(tokenSetPath);
-  }, [dispatch]);
-
-  const handleDragStart = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
-    dragContext.controls?.start(event);
-  }, [dragContext.controls]);
 
   return (
     <TokenSetItem
@@ -77,24 +68,12 @@ export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>
       )}
       item={item}
       onCheck={handleCheckedChange}
-      canEdit={!editProhibited}
-      canReorder={!editProhibited}
-      canDelete={!editProhibited || Object.keys(item.tokenSets).length > 1}
-      onRename={item.onRename}
-      onDelete={item.onDelete}
-      onDuplicate={item.onDuplicate}
-      onDragStart={handleDragStart}
-      onTreatAsSource={handleTreatAsSource}
+
     />
   );
 }
 export default function TokenSetList({
   tokenSets,
-  onRename,
-  onDelete,
-  onReorder,
-  onDuplicate,
-  saveScrollPositionSet,
 }: Props) {
   const [items, setItems] = React.useState(tokenSetListToList(tokenSets));
 
@@ -102,12 +81,8 @@ export default function TokenSetList({
     items.map<ExtendedTreeItem>((item) => ({
       ...item,
       tokenSets,
-      onRename,
-      onDelete,
-      onDuplicate,
-      saveScrollPositionSet,
     } as unknown as ExtendedTreeItem))
-  ), [items, tokenSets, onRename, onDelete, onDuplicate, saveScrollPositionSet]);
+  ), [items, tokenSets]);
 
   const handleReorder = React.useCallback((reorderedItems: ExtendedTreeItem[]) => {
     const nextItems = compact(
@@ -115,9 +90,8 @@ export default function TokenSetList({
         items.find(({ key }) => item.key === key)
       )),
     );
-    onReorder(nextItems.map(({ path }) => path));
     setItems(nextItems);
-  }, [items, onReorder]);
+  }, [items]);
 
   useEffect(() => {
     setItems(tokenSetListToList(tokenSets));
