@@ -20,16 +20,22 @@ const ThemeDropdownLabel = styled(Text, {
   marginRight: '$2',
 });
 
+interface AvailableTheme {
+  value: string,
+  label: string,
+}
+
 export default function Theme(){
   const dispatch = useDispatch();
 
   const activeTheme = useSelector((state: RootState) => (state.themeTokenSet)).activeTheme;
-  const availableThemes = useSelector((state: RootState) => (state.themeTokenSet)).availableThemes;
+  const availableThemes: AvailableTheme[] = useSelector((state: RootState) => (state.themeTokenSet)).availableThemes;
   const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
-  
   const activeThemeLabel = useMemo(() => {
-    if (activeTheme) {
-      const themeOption = availableThemes.find(( theme ) => theme?.value  === activeTheme);
+    if (activeTheme && availableThemes.length > 0) {
+      const themeOption: AvailableTheme = availableThemes.find(( theme: AvailableTheme ) => {
+        theme?.value  === activeTheme;
+      });
       return themeOption ? themeOption?.label : 'Unknown';
     }
     return 'None';
