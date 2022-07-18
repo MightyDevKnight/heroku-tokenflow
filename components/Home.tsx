@@ -48,9 +48,15 @@ export default function Home({
   usedTokenSet,
 }: HomeProps) {
   const dispatch = useDispatch();
-  const themes = availableThemes.split('---').map(theme => {
-    return JSON.parse(theme);
-  });
+  console.log('availableThemes', availableThemes, activeTheme);
+  let themes;
+  if(availableThemes === ''){
+    themes = availableThemes.split('');
+  } else {
+    themes = availableThemes.split('---').map(theme => {
+      return JSON.parse(theme);
+    });
+  }
   useEffect(() => {
     dispatch(updateActiveTheme({activeTheme: activeTheme}));
     dispatch(updateAvailableThemes({availableThemes: themes}));

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TokenSetStatus } from "../constants/TokenSetStatus";
 
 interface ThemeTokenSetState {
   activeTheme: string,
@@ -43,7 +44,12 @@ const themeTokenSetState = createSlice({
 		},
 		updateCollapsedTokenSets(state, action: PayloadAction<{collapsedTokenSet: string[]}>){
 			state.collapsedTokenSets = action.payload.collapsedTokenSet;
-		}
+		},
+		updateTokenSetStatus(state, action: PayloadAction<{path: string}>){
+			state.usedTokenSet[action.payload.path] = state.usedTokenSet[action.payload.path] === TokenSetStatus.DISABLED
+				? TokenSetStatus.ENABLED
+				: TokenSetStatus.DISABLED;
+		},
 	},
 })
 
@@ -53,5 +59,6 @@ export const {
   updateUsedTokenSet,
 	updateActiveTokenSet,
 	updateCollapsedTokenSets,
+	updateTokenSetStatus,
 } = themeTokenSetState.actions;
 export default themeTokenSetState;

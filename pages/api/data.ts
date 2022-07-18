@@ -35,16 +35,19 @@ function runMiddleware(req, res, fn) {
 export default async function handler( req: NextApiRequest, res: NextApiResponse<Data>) {
   await runMiddleware(req, res, cors);
   
-  const fileName = req.query.id as string;
   try {
-    const themeData = await prisma.token.findFirst({
-      where: {
-        userId: fileName,
+    {
+      const fileName = req.query.id as string;
+      const themeData = await prisma.token.findFirst({
+        where: {
+          userId: fileName,
+        }
       }
+      );
+      const token = await tokenData.read(fileName);
+      if(themeData !== null)
+        return res.status(200).json({ result: {token, themeData}});  
     }
-    );
-    const token = await tokenData.read(fileName);
-    return res.status(200).json({ result: {token, themeData}});  
   } catch (error) {
     res.json(error);
     res.status(405).end();

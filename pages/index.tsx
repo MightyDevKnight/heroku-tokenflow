@@ -36,8 +36,8 @@ function App() {
       <Provider store={store}>
         <Home 
           tokenArray={converted}
-          activeTheme={theme.activeTheme}
-          availableThemes={theme.availableThemes}
+          activeTheme={theme?.activeTheme}
+          availableThemes={theme?.availableThemes}
           usedTokenSet={JSON.parse(theme.usedTokenSet)}
         />
       </Provider>

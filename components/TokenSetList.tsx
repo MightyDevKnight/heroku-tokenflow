@@ -11,7 +11,7 @@ import { TokenSetStatus } from '../constants/TokenSetStatus';
 import { TokenSetListOrTree } from './TokenSetListOrTree';
 import { useRaisedShadow } from './use-raised-shadow';
 import { tokenSetListToList, TreeItem } from '../utils/tokenset';
-import { updateActiveTheme, updateActiveTokenSet, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
+import { updateActiveTheme, updateActiveTokenSet, updateAvailableThemes, updateTokenSetStatus, updateUsedTokenSet } from "../store/themeTokenSetState";
 
 type ExtendedTreeItem = TreeItem & {
   tokenSets: string[];
@@ -53,7 +53,7 @@ export function TokenSetListItemContent({ item }: Parameters<TreeRenderFunction>
   }, [dispatch]);
 
   const handleCheckedChange = useCallback((checked: boolean, item: TreeItem) => {
-    // dispatch.tokenState.toggleUsedTokenSet(item.path);
+    dispatch(updateTokenSetStatus({path: item.path}));
   }, [dispatch]);
 
   return (

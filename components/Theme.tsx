@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import TokenSetList from "./TokenSetList";
+import TokenSetTree from "./TokenSetTree";
 
 const ThemeDropdownLabel = styled(Text, {
   marginRight: '$2',
@@ -96,7 +97,7 @@ export default function Theme(){
         ))}
       </div>
       <div>TokenSets</div>
-      <TokenSetList tokenSets={Object.keys(usedTokenSet)} />
+      <TokenSetTree tokenSets={Object.keys(usedTokenSet)} />
     </Box>
   )
 }

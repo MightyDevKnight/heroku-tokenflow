@@ -7,16 +7,17 @@ import { RootState } from '../store';
 import { TokenSetStatus } from '../constants/TokenSetStatus';
 import { TokenSetListOrTree } from './TokenSetListOrTree';
 import { tokenSetListToTree, TreeItem } from '../utils/tokenset';
-import { updateActiveTokenSet } from '../store/themeTokenSetState';
+import { updateActiveTokenSet, updateTokenSetStatus } from '../store/themeTokenSetState';
+import { ReorderGroup } from '../utils/motion/ReorderGroup';
 
 export default function TokenSetTree({
-  tokenSets, onRename, onDelete, onDuplicate, saveScrollPositionSet
-}: { tokenSets: string[], onRename: (tokenSet: string) => void, onDelete: (tokenSet: string) => void, onDuplicate: (tokenSet: string) => void , saveScrollPositionSet: (tokenSet: string) => void}) {
+  tokenSets,
+}: { tokenSets: string[]}) {
   const activeTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).activeTokenSet;
   const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
   const dispatch = useDispatch();
   const [items, setItems] = useState<TreeItem[]>(tokenSetListToTree(tokenSets));
-
+  
   const determineCheckedState = useCallback((item: TreeItem) => {
     if (item.isLeaf) {
       if (usedTokenSet?.[item.path] === TokenSetStatus.SOURCE) {
@@ -57,12 +58,15 @@ export default function TokenSetTree({
   ), [items, activeTokenSet, determineCheckedState]);
 
   const handleCheckedChange = useCallback((shouldCheck: boolean, set: typeof items[number]) => {
-    // if (set.isLeaf) {
-    //   dispatch.tokenState.toggleUsedTokenSet(set.path);
-    // } else {
-    //   const itemPaths = items.filter((i) => i.path.startsWith(set.path) && i.path !== set.path).map((i) => i.path);
-    //   dispatch.tokenState.toggleManyTokenSets({ shouldCheck, sets: itemPaths });
-    // }
+
+    if (set.isLeaf) {
+      dispatch(updateTokenSetStatus({path: set.path}));
+    } else {
+      const itemPaths = items.filter((i) => i.path.startsWith(set.path) && i.path !== set.path).map((i) => i.path);
+      itemPaths.forEach((path => {
+        dispatch(updateTokenSetStatus({path: path}));
+      }))
+    }
   }, [dispatch, items]);
 
   const handleClick = useCallback((set: typeof items[number]) => {
@@ -96,11 +100,17 @@ export default function TokenSetTree({
   }, [tokenSets]);
 
   return (
-    <TokenSetListOrTree
-      displayType="tree"
-      items={mappedItems}
-      renderItem={renderItem}
-      renderItemContent={renderItemContent}
-    />
+    <ReorderGroup
+      layoutScroll
+      values={mappedItems} 
+    >
+      <TokenSetListOrTree
+        displayType="tree"
+        items={mappedItems}
+        renderItem={renderItem}
+        renderItemContent={renderItemContent}
+      />
+    </ReorderGroup>
+    
   );
 }

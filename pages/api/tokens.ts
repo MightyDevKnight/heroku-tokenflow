@@ -41,7 +41,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     data:{
       userId: userId,
       activeTheme: req.body.activeTheme,
-      availableThemes:stringData.slice(0, -3),
+      availableThemes: stringData.slice(0, -3),
       usedTokenSet: JSON.stringify(req.body.usedTokenSet),
     }
   });

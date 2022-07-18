@@ -10,12 +10,9 @@ const StyledIndicator = styled(CheckboxPrimitive.Indicator, {
 
 const StyledCheckbox = styled(CheckboxPrimitive.Root, {
   all: 'unset',
-  backgroundColor: '$bgDefault',
+  backgroundColor: '#728BE6',
   borderRadius: '$input',
-  border: '1px solid $interaction',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  
   width: 12,
   height: 12,
   '&:focus': { boxShadow: '0 0 0 2px black' },

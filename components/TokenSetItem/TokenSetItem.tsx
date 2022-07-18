@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { CheckIcon } from '@radix-ui/react-icons';
 import Checkbox from '../Checkbox';
@@ -35,7 +35,7 @@ export function TokenSetItem({
   }, [item, onClick]);
 
   const handleCheckedChange = useCallback(() => {
-    onCheck(!isChecked, item);
+    onCheck(!isChecked, item);    
   }, [item, isChecked, onCheck]);
 
 
