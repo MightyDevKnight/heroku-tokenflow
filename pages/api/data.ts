@@ -36,7 +36,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   await runMiddleware(req, res, cors);
   
   const fileName = req.query.id as string;
-  if(req.query.id !== 'undefined'){
+  try {
     const themeData = await prisma.token.findFirst({
       where: {
         userId: fileName,
@@ -45,5 +45,18 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     );
     const token = await tokenData.read(fileName);
     return res.status(200).json({ result: {token, themeData}});  
+  } catch (error) {
+    res.json(error);
+    res.status(405).end();
   }
+  // if(req.query.id !== 'undefined'){
+  //   const themeData = await prisma.token.findFirst({
+  //     where: {
+  //       userId: fileName,
+  //     }
+  //   }
+  //   );
+  //   const token = await tokenData.read(fileName);
+  //   return res.status(200).json({ result: {token, themeData}});  
+  // }
 }

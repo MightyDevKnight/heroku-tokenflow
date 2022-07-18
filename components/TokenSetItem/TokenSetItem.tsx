@@ -34,22 +34,6 @@ export function TokenSetItem({
     onClick(item);
   }, [item, onClick]);
 
-  // const handleRename = useCallback(() => {
-  //   onRename(item.path);
-  // }, [item.path, onRename]);
-
-  // const handleDelete = useCallback(() => {
-  //   onDelete(item.path);
-  // }, [item.path, onDelete]);
-
-  // const handleDuplicate = useCallback(() => {
-  //   onDuplicate(item.path);
-  // }, [item.path, onDuplicate]);
-
-  // const handleTreatAsSource = useCallback(() => {
-  //   onTreatAsSource(item.path);
-  // }, [item.path, onTreatAsSource]);
-
   const handleCheckedChange = useCallback(() => {
     onCheck(!isChecked, item);
   }, [item, isChecked, onCheck]);
@@ -64,7 +48,7 @@ export function TokenSetItem({
 
   return (
     <StyledWrapper>
-        <StyledButton
+      <StyledButton
           itemType="folder"
           type="button"
           isActive={isActive}
@@ -82,7 +66,7 @@ export function TokenSetItem({
           >
             {item.label}
           </Box>
-        </StyledButton>
+      </StyledButton>
       <StyledCheckbox checked={isChecked}>
         <Checkbox
           id={item.path}
@@ -91,6 +75,7 @@ export function TokenSetItem({
           onCheckedChange={handleCheckedChange}
         />
       </StyledCheckbox>
+    
     </StyledWrapper>
   );
 }
