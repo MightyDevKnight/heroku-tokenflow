@@ -33,16 +33,13 @@ export default function Theme(){
   const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
   const activeThemeLabel = useMemo(() => {
     if (activeTheme && availableThemes.length > 0) {
-      const themeOption: AvailableTheme = availableThemes.find(( theme: AvailableTheme ) => {
-        theme?.value  === activeTheme;
-      });
+      const themeOption = availableThemes.find(( theme: AvailableTheme ) => (theme.value  === activeTheme));
       return themeOption ? themeOption?.label : 'Unknown';
     }
     return 'None';
   }, [activeTheme, availableThemes]);
 
   const handleSelectTheme = useCallback((themeId: string) => {
-    // dispatch.tokenState.setActiveTheme((activeTheme === themeId) ? null : themeId);
     if(activeTheme !== themeId)
       dispatch(updateActiveTheme({activeTheme: themeId}));
   }, [dispatch, activeTheme]);

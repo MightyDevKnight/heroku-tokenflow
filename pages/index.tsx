@@ -21,7 +21,7 @@ function App() {
 
   const { data } = useSWR(['api/data', fileName], fetcherFunc);
   
-  if(typeof data === 'object'){
+  if(typeof data === 'object' && typeof fileName !== 'undefined' && data !== null){
     const tokens = JSON.parse(data.result.token);
     theme = data.result.themeData;
     
