@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useCallback } from "react";
+import React, { useMemo, useCallback } from "react";
 import { TokenTypes } from "../constants/TokenTypes";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuItemIndicator, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./DropdownMenu";
 import { Flex } from "./Flex";
@@ -9,12 +9,10 @@ import IconToggleableDisclosure from "./IconToggleableDisclosure";
 import Box from "./Box";
 import Heading from "./Heading";
 import { CheckIcon } from "@radix-ui/react-icons";
-import themeTokenSetState from "../store/themeTokenSetState";
-import { updateActiveTheme, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
+import { updateActiveTheme } from "../store/themeTokenSetState";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import TokenSetList from "./TokenSetList";
 import TokenSetTree from "./TokenSetTree";
 
 const ThemeDropdownLabel = styled(Text, {
