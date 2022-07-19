@@ -10,6 +10,7 @@ import { StyledButton } from './StyledButton';
 import { StyledWrapper } from './StyledWrapper';
 import IconIndeterminateAlt from '../icons/indeterminate-alt.svg';
 import { TreeItem } from '../../utils/tokenset';
+import { IconCheck } from '../icons';
 
 export type TokenSetItemProps = {
   item: TreeItem;
@@ -41,7 +42,7 @@ export function TokenSetItem({
 
   const renderIcon = useCallback((checked: typeof isChecked, fallbackIcon: React.ReactNode) => {
     if (tokenSetStatus === tokenSetStatus) {
-      return <IconIndeterminateAlt />;
+      return <IconCheck />;
     }
     return fallbackIcon;
   }, [tokenSetStatus]);
@@ -59,7 +60,7 @@ export function TokenSetItem({
               paddingLeft: `${5 * item.level}px`,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              color: '$textMuted',
+              color: '$bgToolTip',
               fontWeight: '$normal',
               userSelect: 'none',
             }}
