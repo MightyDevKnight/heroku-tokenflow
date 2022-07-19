@@ -15,6 +15,7 @@ export default function TokenSetTree({
 }: { tokenSets: string[]}) {
   const activeTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).activeTokenSet;
   const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
+  console.log('usedTokenSet', usedTokenSet);
   const dispatch = useDispatch();
   const [items, setItems] = useState<TreeItem[]>(tokenSetListToTree(tokenSets));
   

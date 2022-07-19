@@ -8,7 +8,7 @@ import { StyledGrabber } from './StyledGrabber';
 import { StyledCheckbox } from './StyledCheckbox';
 import { StyledButton } from './StyledButton';
 import { StyledWrapper } from './StyledWrapper';
-import IconIndeterminateAlt from '../icons/indeterminate-alt.svg';
+
 import { TreeItem } from '../../utils/tokenset';
 import { IconCheck } from '../icons';
 
