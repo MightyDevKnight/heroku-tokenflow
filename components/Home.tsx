@@ -40,13 +40,11 @@ export default function Home({
     dispatch(updateThemeObjects({themeObjects: newThemeObjects}));
   },[activeTheme, dispatch, newThemeObjects, themeObjects, themes, usedTokenSet]);
   return (
-    <>
     <div style={{ display: 'flex'}}>
       <Theme />
-      <NodeFlower 
+      <NodeFlower
         tokenArray={tokenArray}
       />
     </div>
-    </>
   );
 }

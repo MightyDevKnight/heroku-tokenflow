@@ -130,7 +130,7 @@ export default function NodeFlower({
   
   return (
     <>
-    <div style={{ height: '100vh' }} className="layoutflow">
+    <div style={{ height: '100' }} className="layoutflow">
       <ReactFlowProvider>
         <ReactFlow
           nodes={nodes} 
