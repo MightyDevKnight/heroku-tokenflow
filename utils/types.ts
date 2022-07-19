@@ -142,4 +142,5 @@ export type ThemeDataTypes = {
     activeTheme: string;
     availableThemes: string;
     usedTokenSet: string;
+    themeObjects: string,
 }

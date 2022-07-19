@@ -39,6 +39,7 @@ function App() {
           activeTheme={theme?.activeTheme}
           availableThemes={theme?.availableThemes}
           usedTokenSet={JSON.parse(theme.usedTokenSet)}
+          themeObjects={theme.themeObjects}
         />
       </Provider>
     }

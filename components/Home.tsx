@@ -2,14 +2,16 @@ import React, { useState, useEffect, MouseEvent, useCallback } from "react";
 import { Provider, useSelector, useDispatch } from 'react-redux';
 
 import NodeFlower from "./NodeFlower";
-import { updateActiveTheme, updateAvailableThemes, updateUsedTokenSet } from "../store/themeTokenSetState";
+import { updateActiveTheme, updateAvailableThemes, updateThemeObjects, updateUsedTokenSet } from "../store/themeTokenSetState";
 import Theme from "./Theme";
+import type { ThemeObject } from "../store/themeTokenSetState";
 
 export type HomeProps = {
   tokenArray: any;
   activeTheme: string;
   availableThemes: string;
   usedTokenSet: object;
+  themeObjects: string,
 }
 
 export default function Home({
@@ -17,9 +19,12 @@ export default function Home({
   activeTheme,
   availableThemes,
   usedTokenSet,
+  themeObjects,
 }: HomeProps) {
   const dispatch = useDispatch();
-  console.log('availableThemes', availableThemes, activeTheme);
+  const newThemeObjects: ThemeObject[] = themeObjects.split('---').map(themeObject => {
+    return JSON.parse(themeObject);
+  });
   let themes;
   if(availableThemes === ''){
     themes = availableThemes.split('');
@@ -32,7 +37,8 @@ export default function Home({
     dispatch(updateActiveTheme({activeTheme: activeTheme}));
     dispatch(updateAvailableThemes({availableThemes: themes}));
     dispatch(updateUsedTokenSet({usedTokenSet: usedTokenSet}));
-  },[activeTheme, dispatch, themes, usedTokenSet]);
+    dispatch(updateThemeObjects({themeObjects: newThemeObjects}));
+  },[activeTheme, dispatch, newThemeObjects, themeObjects, themes, usedTokenSet]);
   return (
     <>
     <div style={{ display: 'flex'}}>

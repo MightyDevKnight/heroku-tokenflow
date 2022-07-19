@@ -9,7 +9,7 @@ import IconToggleableDisclosure from "./IconToggleableDisclosure";
 import Box from "./Box";
 import Heading from "./Heading";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { updateActiveTheme } from "../store/themeTokenSetState";
+import { updateActiveTheme, updateUsedTokenSet } from "../store/themeTokenSetState";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -30,6 +30,7 @@ export default function Theme(){
   const activeTheme = useSelector((state: RootState) => (state.themeTokenSet)).activeTheme;
   const availableThemes: AvailableTheme[] = useSelector((state: RootState) => (state.themeTokenSet)).availableThemes;
   const usedTokenSet = useSelector((state: RootState) => (state.themeTokenSet)).usedTokenSet;
+  const themeObjects = useSelector((state: RootState) => (state.themeTokenSet)).themeObjects;
   const activeThemeLabel = useMemo(() => {
     if (activeTheme && availableThemes.length > 0) {
       const themeOption = availableThemes.find(( theme: AvailableTheme ) => (theme.value  === activeTheme));
@@ -39,9 +40,12 @@ export default function Theme(){
   }, [activeTheme, availableThemes]);
 
   const handleSelectTheme = useCallback((themeId: string) => {
-    if(activeTheme !== themeId)
+    if(activeTheme !== themeId){
       dispatch(updateActiveTheme({activeTheme: themeId}));
-  }, [dispatch, activeTheme]);
+      const newThemeObject = themeObjects.find((themeObject) => themeObject.id === themeId);
+      dispatch(updateUsedTokenSet({usedTokenSet: newThemeObject.selectedTokenSets}));
+    }
+  }, [activeTheme, dispatch, themeObjects]);
 
   const availableThemeOptions = useMemo(() => (
     availableThemes.map(({ label, value }) => {

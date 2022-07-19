@@ -1,10 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import NextCors from 'nextjs-cors';
 import Cors from 'cors';
 import { tokenData } from '../../utils/tokenData';
 import { PrismaClient } from '@prisma/client';
-const { v4: uuidv4 } = require('uuid');
 
 type Data = {
   result: string
@@ -34,15 +32,17 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
   await runMiddleware(req, res, cors)  
 
   const userId = await tokenData.create(req.body.tokenData);
-  let stringData: string = '';
-  req.body.availableThemes.map(theme => stringData += JSON.stringify(theme) + '---');
+  let stringAvailableThemes: string = '', stringThemeObjects: string = '';
+  req.body.availableThemes.map(theme => stringAvailableThemes += JSON.stringify(theme) + '---');
+  req.body.themeObjects.map(themeObject => stringThemeObjects += JSON.stringify(themeObject) + '---');
   
   await prisma.token.create({
     data:{
       userId: userId,
-      activeTheme: req.body.activeTheme,
-      availableThemes: stringData.slice(0, -3),
+      activeTheme: req.body.activeTheme !== null ? req.body.activeTheme : '',
+      availableThemes: stringAvailableThemes.slice(0, -3),
       usedTokenSet: JSON.stringify(req.body.usedTokenSet),
+      themeObjects: stringThemeObjects.slice(0, -3),
     }
   });
   

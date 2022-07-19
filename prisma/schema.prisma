@@ -16,4 +16,5 @@ model Token {
   activeTheme    String
   availableThemes   String
   usedTokenSet  String
+  themeObjects  String
 }

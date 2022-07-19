@@ -7,10 +7,17 @@ interface ThemeTokenSetState {
   usedTokenSet: object,
 	activeTokenSet: string,
 	collapsedTokenSets: string[],
+	themeObjects: ThemeObject[],
 }
 interface AvailableTheme {
 	value: string,
 	label: string,
+}
+
+export interface ThemeObject {
+	id: string,
+	name: string,
+	selectedTokenSets: {},
 }
 
 const initialState: ThemeTokenSetState = {
@@ -23,7 +30,8 @@ const initialState: ThemeTokenSetState = {
 		global: 'disabled',
 	},
 	activeTokenSet: "",
-	collapsedTokenSets: []
+	collapsedTokenSets: [],
+	themeObjects: [],
 }
 
 const themeTokenSetState = createSlice({
@@ -50,6 +58,9 @@ const themeTokenSetState = createSlice({
 				? TokenSetStatus.ENABLED
 				: TokenSetStatus.DISABLED;
 		},
+		updateThemeObjects(state, action: PayloadAction<{themeObjects: ThemeObject[]}>){
+			state.themeObjects = action.payload.themeObjects;
+		}
 	},
 })
 
@@ -60,5 +71,6 @@ export const {
 	updateActiveTokenSet,
 	updateCollapsedTokenSets,
 	updateTokenSetStatus,
+	updateThemeObjects,
 } = themeTokenSetState.actions;
 export default themeTokenSetState;
