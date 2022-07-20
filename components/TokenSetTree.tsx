@@ -55,15 +55,15 @@ export default function TokenSetTree({
       isActive: activeTokenSet === item.path,
       checkedState: determineCheckedState(item) as ReturnType<typeof determineCheckedState>,
     }))
-  ), [items, activeTokenSet, determineCheckedState]);
+  ), [items, activeTokenSet, determineCheckedState]);  
 
   const handleCheckedChange = useCallback((shouldCheck: boolean, set: typeof items[number]) => {
-
     if (set.isLeaf) {
       dispatch(updateTokenSetStatus({path: set.path}));
     } else {
       const itemPaths = items.filter((i) => i.path.startsWith(set.path) && i.path !== set.path).map((i) => i.path);
-      itemPaths.forEach((path => {
+      const reorderedPaths = Array.from(new Set(itemPaths));
+      reorderedPaths.forEach((path => {
         dispatch(updateTokenSetStatus({path: path}));
       }))
     }
