@@ -96,7 +96,7 @@ export default function TokenSetTree({
   ), [handleCheckedChange, handleClick]);
 
   useEffect(() => {
-    setItems(tokenSetListToTree(tokenSets));
+    setItems(tokenSetListToTree(tokenSets));    
   }, [tokenSets]);
 
   return (
